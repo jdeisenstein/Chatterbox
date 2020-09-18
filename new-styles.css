@@ -1,0 +1,15 @@
+#start-button{
+    width: 6rem;
+    height: 6rem;
+    border-radius: 3rem;
+    background-color: green;
+    color:  white;
+    border: none;
+    font-size: 1rem;
+    font-weight: 200;
+}
+#start-button:hover {
+background-color: lightgreen;
+color:  green;
+}
+
