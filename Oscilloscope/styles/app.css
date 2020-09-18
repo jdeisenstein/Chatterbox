@@ -1,0 +1,192 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 0.8rem;
+}
+
+.wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2 {
+  font-size: 4rem;
+  text-align: center;
+  font-weight:  200;
+  padding: 0.5rem 0 0 0;
+  color:  rgb(15, 61, 99);
+}
+
+.main-controls {
+  padding: 0.5rem 0;
+}
+
+canvas {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+#buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#buttons button {
+  font-size: 1rem;
+  padding: 1rem;
+  margin-left: 8rem;
+  margin-right: 8rem;
+  margin-bottom: 12rem;
+  margin-top:    -6rem;
+ /* width: calc(50% - 0.25rem);*/
+ width: 6rem;
+ height: 6rem;
+ border-radius: 3rem;
+ border: none;
+
+}
+
+button {
+  font-size: 1rem;
+  background: #0088cc;
+  text-align: center;
+  color: white;
+  transition: all 0.2s;
+  padding: 0.5rem;
+}
+
+button:hover, button:focus {
+  box-shadow:  0px 0px 10px rgba(255, 255, 255, 1);
+  background: #08aacc;
+}
+
+button:active {
+  box-shadow: inset 0px 0px 20px rgba(0,0,0,0.5);
+  transform: translateY(2px);
+}
+
+
+/* Make the clips use as much space as possible, and
+ * also show a scrollbar when there are too many clips to show
+ * in the available space */
+.sound-clips {
+  flex: 1;
+  overflow: auto;
+}
+
+section, article {
+  display: block;
+}
+
+.clip {
+  padding-bottom: 1rem;
+}
+
+audio {
+  width: 100%;
+  display: block;
+  margin: 1rem auto 0.5rem;
+}
+
+.clip p {
+  display: inline-block;
+  font-size: 1rem;
+}
+
+.clip button {
+  font-size: 1rem;
+  float: right;
+}
+
+button.delete {
+  background: #f00;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+/* Checkbox hack to control information box display */
+
+label {
+  font-size: 3rem;
+  position: absolute;
+  top: 2px;
+  right: 3px;
+  z-index: 5;
+  cursor: pointer;
+  background-color: black;
+  border-radius: 10px;
+}
+
+input[type=checkbox] {
+   position: absolute;
+   top: -100px;
+}
+
+aside {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateX(100%);
+  transition: 0.3s all ease-out;
+  background-color: #efefef;
+  padding: 1rem;
+}
+
+aside p {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+}
+
+aside a {
+  color: #666;
+}
+
+/* Toggled State of information box */
+input[type=checkbox]:checked ~ aside {
+  transform: translateX(0);
+}
+
+/* Cursor when clip name is clicked over */
+
+.clip p {
+  cursor: pointer;
+}
+.visualizer{                                                                                             
+  margin-left:  35%;                                                                          
+  margin-right: 35%;   
+  width:  30%;
+  height: 300px;
+  border-color: lightblue;
+  border-width: 6px;
+  border-style:  groove ridge ridge groove;
+  border-top-right-radius: 5rem;
+  border-bottom-right-radius: 5rem;
+  border-top-left-radius: 5rem;
+  border-bottom-left-radius: 5rem;
+  border-radius: 50%;
+
+}
+
+/* Adjustments for wider screens */
+@media all and (min-width: 800px) {
+  /* Don't take all the space as readability is lost when line length
+     goes past a certain size */
+  .wrapper {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+}
