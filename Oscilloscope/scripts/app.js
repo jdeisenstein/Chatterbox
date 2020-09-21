@@ -1,26 +1,179 @@
 // set up basic variables for app
 
-const record = document.querySelector('.record');
-//const stop = document.querySelector('.stop');
-const next = document.querySelector('.next');
-const soundClips = document.querySelector('.sound-clips');
-const canvas = document.querySelector('.visualizer');
-const mainSection = document.querySelector('.main-controls');
+const recordAnswer   = document.querySelector('.record');
+const repeatQuestion = document.querySelector('.repeat');
+const nextQuestion   = document.querySelector('.next');
+const playPrompt     = document.querySelector('.btn');
+const soundClips     = document.querySelector('.sound-clips');
+const canvas         = document.querySelector('.visualizer');
+const mainSection    = document.querySelector('.main-controls');
 
-// deactivate the TALK/stop button until after the prompt has finished
+const startButtonClickHandler = function () {
+    $('#repeat-question-button').on('click', function () {
+        console.log(`***** Entering startButtonClickHandler *****`);
+        displayDisabledNextQuestionButton();
+        displayDisabledRepeatQuestionButton();
+        displayDisabledTalkStopButton();
 
-record.disabled         = true;
-record.style.background = "gray";
-record.style.color      = "lightgray";
-record.innerHTML        = "PRESS to TALK";
+        jQuery(document).ready(function () {
+          var audioArray = document.getElementsByClassName('prompts-16');
+          var i = 0;
+            console.log("audio array:")
+            console.log(audioArray[i].duration);
+            audioArray[i].play();
+            for (i = 0; i < audioArray.length - 1; ++i) {
+              audioArray[i].addEventListener('ended', function (e) {
+                console.log(`***** the song is over *****`)
 
-// deactivate the next/Repeat button after the prompt finishes
+                var currentSong = e.target;
+                var next = $(currentSong).nextAll('audio');
+                if (next.length) $(next[0]).trigger('play');
+                });
+            }
+        });
+      
+        // when prompt completes, activate Talk/Stop button
+        // displayEnabledNextQuestionButton();
+        //displayEnabledRepeatQuestionButton();
+        //displayEnabledTalkStopButton();
+        console.log(`***** Leaving startButtonClickHandler *****`);
+    });
+}
 
-next.disabled           = true;
-next.style.background   = "gray";
-next.style.color        = "lightgray";
-next.innerHTML          = "REPEAT QUESTION";
 
+//repeatButtonClickHandler();
+
+// *** TALK/STOP Button 
+
+const pressTalkStopButton = function () {
+  console.log(`***** TALK/stop Button: UP to Down *****`);
+  // start recording...
+  // Talk diameter => expands to Stop diameter
+  // becomes enabled Stop button (release to stop recording)
+  displayEnabledStopTalkButton();
+  // disable the prompt navigation buttons
+  displayDisabledNextQuestionButton();
+  displayDisabledRepeatQuestionButton();
+}
+const releaseStopTalkButton = function () {
+  console.log(`***** talk/STOP Button: Down to UP *****`);
+  // stop recording...
+  // Stop diameter => contracts to Talk diameter
+  // Disable TALK/stop button
+  displayDisabledTalkStopButton();
+  // activate the prompt navigation buttons
+  displayEnabledNextQuestionButton();
+  displayEnabledRepeatQuestionButton();
+}
+// *** NEXT QUESTION Button
+
+const pressNextQuestionButton = function () {
+  // Next Question button released diameter => expands to pressed diameter 
+  console.log(`***** NEXT QUESTION Button: UP to Down *****`);
+}
+const releaseNextQuestionButton = function () {
+  // Next Question button pressed diameter => contracts to released diameter 
+  console.log(`***** NEXT QUESTION Button: Down to UP *****`);
+}
+const clickNextQuestionButton = function () {
+  console.log(`***** NEXT QUESTION Button: UP to Down to UP *****`);
+  // disable prompt navigation buttons
+  displayDisabledNextQuestionButton();
+  displayDisabledRepeatQuestionButton();
+  // and the Talk button during the prompt playback
+  displayDisabledTalkStopButton();
+  // and starts playback of the next prompt...
+
+  // when the prompt completes, enable Talk button and Repeat Question button
+  displayEnabledTalkStopButton();
+  displayEnabledRepeatQuestionButton();
+}
+// *** REPEAT QUESTION Button
+
+const pressRepeatQuestionButton = function () {
+  console.log(`***** REPEAT QUESTION Button: Up to Down *****`);
+  // Repeat Question button released diameter => expands to pressed diameter
+}
+const releaseRepeatQuestionButton = function () {
+  console.log(`***** REPEAT QUESTION Button: Down to Up *****`);
+  // Repeat Question button pressed diameter => contracts to released diameter
+}
+const clickRepeatQuestionButton = function () {
+  console.log(`***** REPEAT QUESTION Button: Up to Down to Up *****`);
+  // Disable Talk/stop button & Repeat Question button & Next Question button
+  displayDisabledNextQuestionButton();
+  displayDisabledRepeatQuestionButton();
+  displayDisabledTalkStopButton();
+  // start replay of current prompt.
+
+  // when prompt completes, activate Talk/Stop button
+  displayEnabledNextQuestionButton();
+  displayEnabledRepeatQuestionButton();
+  displayEnabledTalkStopButton();
+}
+// *** Display functions for TALK/STOP button
+
+const displayEnabledTalkStopButton = function () {
+  console.log(`***** TALK/stop Button: Enabled *****`);
+  recordAnswer.disabled = false;
+  recordAnswer.style.background = "green";
+  recordAnswer.style.color = "white";
+  recordAnswer.innerHTML = "PRESS to TALK";
+}
+const displayDisabledTalkStopButton = function () {
+  console.log(`***** TALK/stop Button: Disabled *****`);
+  recordAnswer.disabled = true;
+  recordAnswer.style.background = "#C0C0C0";
+  recordAnswer.style.color = "#E0E0E0";
+  recordAnswer.innerHTML = "PRESS to TALK";
+}
+const displayEnabledStopTalkButton = function () {
+  console.log(`***** talk/STOP Button: Enabled *****`);
+  recordAnswer.disabled = false;
+  recordAnswer.style.background = "red";
+  recordAnswer.style.color = "white";
+  recordAnswer.innerHTML = "RECORDING Release to End";
+}
+// This case shouldn't be needed
+const displayDisabledStopTalkButton = function () {
+  console.log(`***** talk/STOP Button: Disabled *****`);
+  recordAnswer.disabled = true;
+  recordAnswer.style.background = "gray";
+  recordAnswer.style.color = "lightgray";
+  recordAnswer.innerHTML = "RECORDING Release to End";
+}
+// *** Display functions for NEXT QUESTION button
+
+const displayEnabledNextQuestionButton = function () {
+  console.log(`***** NEXT QUESTION Button: Enabled *****`);
+  nextQuestion.disabled = false;
+  nextQuestion.style.background = "blue";
+  nextQuestion.style.color = "white";
+  nextQuestion.innerHTML = "NEXT Question";
+}
+const displayDisabledNextQuestionButton = function () {
+  console.log(`***** NEXT QUESTION Button: Disabled *****`);
+  nextQuestion.disabled = true;
+  nextQuestion.style.background = "gray";
+  nextQuestion.style.color = "lightgray";
+  nextQuestion.innerHTML = "NEXT Question";
+}
+// *** Display functions for REPEAT QUESTION button
+
+const displayEnabledRepeatQuestionButton = function () {
+  console.log(`***** REPEAT QUESTION Button: Enabled *****`);
+  repeatQuestion.disabled = false;
+  repeatQuestion.style.background = "blue";
+  repeatQuestion.style.color = "white";
+  repeatQuestion.innerHTML = "REPEAT Question";
+}
+const displayDisabledRepeatQuestionButton = function () {
+  console.log(`***** REPEAT QUESTION Button: Disabled *****`);
+  repeatQuestion.disabled = true;
+  repeatQuestion.style.background = "gray";
+  repeatQuestion.style.color = "lightgray";
+  repeatQuestion.innerHTML = "REPEAT Question";
+}
 // visualiser setup - create web audio api context and canvas
 
 let audioCtx;
@@ -31,7 +184,9 @@ const canvasCtx = canvas.getContext("2d");
 if (navigator.mediaDevices.getUserMedia) {
   console.log('getUserMedia supported.');
 
-  const constraints = { audio: true };
+  const constraints = {
+    audio: true
+  };
 
   let chunks = [];
 
@@ -41,79 +196,117 @@ if (navigator.mediaDevices.getUserMedia) {
     visualize(stream);
 
     // The prompt has played and TALK/stop is now active as is the REPEAT/next button
-    // If Talk/stop is pressed, REPEAT/next is immeditely deactivated
-    record.onmousedown = function () {
-      mediaRecorder.start();
+    // If Talk/stop is pressed, REPEAT/next is immeditely Disabled
+    recordAnswer.onmousedown = function () {
+      console.log(`***** TALK/stop Button Handler: Up to Down *****`);
+      pressTalkStopButton();
 
-      console.log("****recorder starts *****");
+      //mediaRecorder.start();
+      console.log("**** recorder starts *****");
       console.log(mediaRecorder.state);
 
-// the talk button turns red when pressed and remains that way until released
-      record.style.background   = "red";
-      record.style.color        = "white"
-      record.innerHTML          = "RELEASE to STOP";
+      // enable talk/STOP button. 
+      // disable REPEAT QUESTION button & NEXT QUESTION button
     }
 
-    record.onmouseup = function () {
-      mediaRecorder.stop();
+    recordAnswer.onmouseup = function () {
+      console.log(`***** talk/STOP Button Handler: Down to Up *****`);
+      releaseStopTalkButton();
 
+      //mediaRecorder.stop();
       console.log("**** recorder stops ****");
       console.log(mediaRecorder.state);
 
-      // when talk button is released, recording stops and talk button is deactivated. 
+      // disable TALK/stop button. 
+      // enable REPEAT QUESTION button & NEXT QUESTION button
 
-      record.style.color        = "lightgray";
-      record.innerHTML          = "PRESS to TALK";
-      record.disabled           = true;
- 
-      // and next button, is activated to call for the next prompt.
-      
-      next.disabled             = false;
-      next.innerHTML            = "NEXT QUESTION";
-      next.style.background     = "blue";
-      next.style.color          = "white";
-
-      //record.style.color = "";
+      // recordAnswer.style.color = "";
       // mediaRecorder.requestData();
-
-      //stop.disabled = true;
-    }
-    // The prompt has played and REPEAT/next is now active as is the TALK/stop button
-    // If REPEAT/next is pressed, TALK/stop is immeditely deactivated.  
-    // The prompt is replayed and the REPEAT/next button is deactivated until the prompt has finished again
-    // Then both buttons are once again reactivated.  I should implement these as functions!
-
-    next.onClick = function () {
-      // queue next prompt and play it here 
-
-      // console.log(mediaRecorder.state);
-      console.log("queue the prompt and roll");
-
-      // after "REPEAT/next" is clicked, disable it until after the prompt has played
-      // and deactivate the TALK/stop button too.  This handler needs to track its state,
-      // whether it's in REPEAT/next or repeat/NEXT mode.
-
-      next.innerHTML          = "REPEAT QUESTION";
-      next.style.background   = "gray";
-      next.style.color        = "lightgray";
-      next.disabled           = true;
-
-      // after prompt plays, reenable "TALK/stop" and "REPLAY/next"
-      // Once Talk is pressed REPLAY/next becomes replay/NEXT but remains disabled 
-      // until the talk/STOP button is released, is disabled and becomes TALK/stop
-
-      record.disabled         = false;
-      record.style.background = "green";
-      record.style.color      = "white"
-      record.innerHTML        = "PRESS to TALK";
-
-      //mediaRecorder.start();
-      //console.log(mediaRecorder.state);
-      //console.log("recorder started");
-      //record.style.background = "red";
-      //record.innerHTML = "RELEASE to STOP";
+      // stop.disabled = true;
     }
 
+    nextQuestion.onclick = function () {
+      console.log(`***** NEXT QUESTION Button Handler: Up to Down to Up *****`);
+      clickNextQuestionButton();
+
+      // disable TALK/stop button & REPEAT QUESTION button & NEXT QUESTION button 
+
+      console.log("***** queue up next prompt and roll it *****");
+
+      // After prompt has played, enable TALK/stop button & REPEAT QUESTION button
+    }
+
+    repeatQuestion.onclick = function () {
+      console.log(`***** REPEAT QUESTION Button Handler: Up to Down to Up *****`);
+      //clickRepeatQuestionButton();
+
+      // disable TALK/stop button & REPEAT QUESTION button & NEXT QUESTION button 
+
+      console.log("***** repeat the current prompt *****");
+
+      // After prompt has played enable TALK/stop & REPEAT QUESTION & NEXT QUESTION
+    }
+  
+    
+    // ***** Oscilloscope *****
+
+    function visualize(stream) {
+      if (!audioCtx) {
+        audioCtx = new AudioContext();
+      }
+
+      const source = audioCtx.createMediaStreamSource(stream);
+
+      const analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 2048;
+      const bufferLength = analyser.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+
+      source.connect(analyser);
+      //analyser.connect(audioCtx.destination);
+
+      draw()
+
+      function draw() {
+        const WIDTH = canvas.width
+        const HEIGHT = canvas.height;
+
+        requestAnimationFrame(draw);
+
+        analyser.getByteTimeDomainData(dataArray);
+
+        canvasCtx.fillStyle = 'rgb(0, 0, 0)';
+        canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+
+        canvasCtx.lineWidth = 2;
+        canvasCtx.strokeStyle = 'rgb(0, 255, 0)';
+
+        canvasCtx.beginPath();
+
+        let sliceWidthCoefficient = 3;
+        let sliceWidth = WIDTH * sliceWidthCoefficient / bufferLength;
+        let x = 0;
+
+
+        for (let i = 0; i < bufferLength; i++) {
+
+          let v = dataArray[i] / 128.0;
+          let y = v * HEIGHT / 2;
+
+          if (i === 0) {
+            canvasCtx.moveTo(x, y);
+          } else {
+            canvasCtx.lineTo(x, y);
+          }
+
+          x += sliceWidth;
+        }
+
+        canvasCtx.lineTo(canvas.width, canvas.height / 2);
+        canvasCtx.stroke();
+
+      }
+    }
 
 
     mediaRecorder.onstop = function (e) {
@@ -182,65 +375,8 @@ if (navigator.mediaDevices.getUserMedia) {
   console.log('getUserMedia not supported on your browser!');
 }
 
-function visualize(stream) {
-  if (!audioCtx) {
-    audioCtx = new AudioContext();
-  }
-
-  const source = audioCtx.createMediaStreamSource(stream);
-
-  const analyser = audioCtx.createAnalyser();
-  analyser.fftSize = 2048;
-  const bufferLength = analyser.frequencyBinCount;
-  const dataArray = new Uint8Array(bufferLength);
-
-  source.connect(analyser);
-  //analyser.connect(audioCtx.destination);
-
-  draw()
-
-  function draw() {
-    const WIDTH = canvas.width
-    const HEIGHT = canvas.height;
-
-    requestAnimationFrame(draw);
-
-    analyser.getByteTimeDomainData(dataArray);
-
-    canvasCtx.fillStyle = 'rgb(0, 0, 0)';
-    canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
-
-    canvasCtx.lineWidth = 2;
-    canvasCtx.strokeStyle = 'rgb(0, 255, 0)';
-
-    canvasCtx.beginPath();
-
-    let sliceWidth = WIDTH * 1.0 / bufferLength;
-    let x = 0;
-
-
-    for (let i = 0; i < bufferLength; i++) {
-
-      let v = dataArray[i] / 128.0;
-      let y = v * HEIGHT / 2;
-
-      if (i === 0) {
-        canvasCtx.moveTo(x, y);
-      } else {
-        canvasCtx.lineTo(x, y);
-      }
-
-      x += sliceWidth;
-    }
-
-    canvasCtx.lineTo(canvas.width, canvas.height / 2);
-    canvasCtx.stroke();
-
-  }
-}
-
 window.onresize = function () {
   canvas.width = mainSection.offsetWidth;
 }
-
+startButtonClickHandler();
 window.onresize();

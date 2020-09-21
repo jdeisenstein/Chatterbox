@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>Web dictaphone</title>
+  <title>c H a T t E r B o X</title>
   <link href="styles/app.css" rel="stylesheet" type="text/css">
 </head>
 
@@ -12,18 +12,24 @@
   <div class="wrapper">
 
     <header>
-      <h1>c h a tt e r b o x</h1>
+      <h1>c H a T t E r B o X</h1>
     </header>
 
     <section class="main-controls">
       <canvas class="visualizer" height="60px"></canvas>
       <div id="buttons">
-        <button class="record">PRESS to TALK</button>
-        <button class="stop">NEXT Question</button>
+        <button class="repeat" id="repeat-question-button">REPEAT the Question</button>
+        <button class="record" id="talk-stop-button">PRESS and HOLD to ANSWER</button>
+        <button class="next" id="next-question-button">NEXT Question</button>
       </div>
     </section>
-
-    <section class="sound-clips">
+    <audio id="prompt-15" preload class="prompts-15">
+      <source src="../prompts/now-bark-kimberly.mp3" type="audio/mpeg" />
+    </audio>
+    <audio id="prompt-16" preload class="prompts-16">
+      <source src="../prompts/you-can-do-better-than-that-mia.mp3" type="audio/mpeg" />
+    </audio> 
+  <section class="sound-clips">
 
 
     </section>
@@ -32,6 +38,7 @@
   <aside>
     <p> Thanks to <a href="http://soledadpenades.com/">Sole</a> for the Oscilloscope code!</p>
   </aside>
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <script src="scripts/app.js"></script>
 </body>
 

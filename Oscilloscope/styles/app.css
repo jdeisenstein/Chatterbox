@@ -20,9 +20,9 @@ body {
 }
 
 h1, h2 {
-  font-size: 4rem;
+  font-size: 5rem;
   text-align: center;
-  font-weight:  200;
+  font-weight:  100;
   padding: 0.5rem 0 0 0;
   color:  rgb(15, 61, 99);
 }
@@ -39,42 +39,87 @@ canvas {
 #buttons {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-around;
+  margin-left: 15rem;
+  margin-right: 15rem;
 }
-
-#buttons button {
-  font-size: 1rem;
-  padding: 1rem;
-  margin-left: 8rem;
-  margin-right: 8rem;
+.next, 
+.repeat {
+  font-size: 0.7rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
   margin-bottom: 12rem;
-  margin-top:    -6rem;
+  margin-top:   -4rem;
  /* width: calc(50% - 0.25rem);*/
- width: 6rem;
- height: 6rem;
- border-radius: 3rem;
- border: none;
-
+  width: 5rem;
+  height: 5rem;
+  border-radius: 2.5rem;
+  border: none;
 }
+.next:active, 
+.repeat:active {
+  border: none;
+  transition: all 0.2s;
+  transform: scale3d(1.025,1.05,1);
+}
+
+#talk-stop-button {
+  font-size: 0.7rem;
+  padding: 1rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-bottom: 12rem;
+  margin-top:    1rem;
+ /* width: calc(50% - 0.25rem);*/
+  width: 8rem;
+  height: 8rem;
+  border-radius: 4.0rem;
+  border: none;
+}
+#talk-stop-button:active {
+  border: none;
+  transition: all 0.5s;
+  transform: scale3d(1.025,1.05,1);
+} 
+
+#start-button{
+  width: 6rem;
+  height: 6rem;
+  border-radius: 3rem;
+  background-color: green;
+  color:  white;
+  border: none;
+  font-size: 1rem;
+  font-weight: 200;
+}
+#start-button:hover {
+background-color: lightgreen;
+color:  green;
+}
+
 
 button {
   font-size: 1rem;
   background: #0088cc;
   text-align: center;
   color: white;
-  transition: all 0.2s;
+  transition: all 0.4s;
   padding: 0.5rem;
 }
-
+/*
 button:hover, button:focus {
   box-shadow:  0px 0px 10px rgba(255, 255, 255, 1);
   background: #08aacc;
 }
+*/
 
+/*
 button:active {
   box-shadow: inset 0px 0px 20px rgba(0,0,0,0.5);
   transform: translateY(2px);
 }
+*/
+
 
 
 /* Make the clips use as much space as possible, and
